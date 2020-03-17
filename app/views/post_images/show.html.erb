@@ -16,47 +16,72 @@
              <i class="fa fa-user"></i>By<a href="#">
              <%= @post_image.user.name %></a>
           </li>
+
           <li>
             <i class="fa fa-calendar"></i><%= @post_image.created_at.strftime('%Y/%m/%d') %>
           </li>
-          <li>
-            <i class="fa fa-heart"></i>
-            <a href="#">202 いいね</a>
-          </li>
-          <li>
-            <i class="fa fa-comment"></i>
-            <a href="#comments">4</a>
-          </li>
-        </ul>
-        <div class="post-content-inner mt-20">
-            <p><%= @post_image.caption %></p>
-        </div>
+    <!-- 4章書き換え　イイネボタン -->
+        <% if @post_image.favorited_by?(current_user) %>
+            <li>
+              <%= link_to post_image_favorited_path(@post_image),
+               method: :deleate do %>
+                   <i class ="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+                   <%= @post_image.favorites.count %> いいね
+               <% end %>
+            <li>
+              <%= link_to post_image_favorites_path(@post_image), method: :post do %>
+              <i class="fa fa-heart-o" aria-hidden="true"></i>
+              <%=@post_image.favorites.count %>いいね
+              <% end %>
+            </li>
+            <% end %>
+
+      <!-- ここまで -->
+    <li>
+    <i class="fa fa-comment"></i>
+    <a href="#comments"><%= @post_image.post_comments.count %></a>
+    </li>
+    <!--  削除キー -->
+    <!-- <li>はいらないかも -->
+    <!-- <li> -->
+    <% if @post_image.user == current_user %>
+      <%= link_to "削除", post_image_path(@params_image), method: :deleate %>
+      <% end %>
+    <!-- </li> -->
+     <!-- ここまで -->
+
+<div class="comment-list bt style-2" id="comments">
+    <div class="float-wrapper">
+        <h2 class="comment-count"><%= @post_image.post_comments.count %>件コメント</h2>
     </div>
-          <div class="comment-list bt style-2" id="comments">
-            <div class="float-wrapper">
-              <h2 class="comment-count">4件コメント</h2>
-            </div>
+         
+    </div>
+    <!-- ここまで -->
             <ol>
-              <li class="comment">
-                <div class="comment-body bb">
-                  <div class="comment-avatar">
-                    <div class="avatar">
+              <% @post_image.post_comments.each do |post_comment| %>
+                 <li class="comment">
+                  <div class="comment-body bb">
+                    <div class="comment-avatar">
+                      <div class="avatar">
                       <!-- <img src="images/sample-author1.jpg"> -->
-                      <%= image_tag('sample-author1.jpg') %>
+                      <%= image_tag('sample-author1.jpg', style: "width: 60px; height: 60px;") %>
                     </div>
                   </div>
                   <div class="comment-text">
                     <div class="comment-author clearfix">
-                      <a href="#">投稿者名</a>
+                      <a href="#" class="link-author"><%= post_comment.user.name %></a>
                       <span class="comment-meta">
-                        <span class="comment-date">2017/07/21</span>
+                        <span class="comment-date"><%= post_comment.created_at.strftime('%Y/%m/%d') %></span>
                       </span>
                     </div>
-                    <div class="comment-entry">コメントがここに表示されますコメントがここに表示されますコメントがここに表示されますコメントがここに表示されますコメントがここに表示されますコメントがここに表示されますコメントがここに表示されます</div>
+                     <div class="comment-entry"><%= post_comment.comment %></div>
                   </div>
                 </div>
               </li>
+              <% end %>
             </ol>
+
+
           </div>
           <hr>
 
