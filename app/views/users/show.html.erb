@@ -1,2 +1,26 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<div class="profile-container">
+	<h3 class ="profile-name"><%= @user.name %></h3>
+	<%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: 'jpeg', class: "img-circle pull-left profile-img",fallback: "no_image.jpg" %>
+</div>
+<!-- 6章追記 プロフィール編集ページ-->
+<%= if @user.id == current_user.id %>
+  <p><%= link_to "プロフィール編集", edit_user_path(@user), class: "pull-right"%></p>
+
+
+
+
+<section class="sct-color-1 slice">
+  <div class="container-fluid masonry-container">
+    <div class="row">
+      <div class="col-md-8 col-sm-offset-2">
+        <div class="masonry-wrapper-cols">
+            <% @post_images.each do |post_image| %>
+           
+　　　　　　...
+            
+            <%= paginate @post_images, class: "pagenate" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

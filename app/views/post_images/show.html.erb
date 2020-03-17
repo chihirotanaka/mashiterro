@@ -64,7 +64,9 @@
                     <div class="comment-avatar">
                       <div class="avatar">
                       <!-- <img src="images/sample-author1.jpg"> -->
-                      <%= image_tag('sample-author1.jpg', style: "width: 60px; height: 60px;") %>
+                      <!--  ６章書き換え　プロフィール画像の反映 -->
+                      <%= attachment_image_tag post_comment.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %>
+                      <!-- ここまで -->
                     </div>
                   </div>
                   <div class="comment-text">

@@ -29,11 +29,14 @@
               <span class="icon-bar"></span>
             </button>
           </div>
-          
+    <!-- headline -->
           <div id="slidemenu">
             <ul class="nav navbar-nav navbar-right" data-hover="dropdown" data-animations="zoomIn fadeIn fadeInUp fadeIn">
+              <!-- マイページリンク -->
 	      	  	<li class="">
-                <a href="">
+                <%= link_to 'マイページ', user_path(current_user.id) %>
+              </li>
+              <!-- ここまで -->
                   <span>新規登録</span>
                 </a>
               </li>
